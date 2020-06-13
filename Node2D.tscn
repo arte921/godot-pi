@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://smallcube.gd" type="Script" id=1]
+[ext_resource path="res://bigcube.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Textures/red.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/green.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Textures/yellow.png" type="Texture" id=5]
+[ext_resource path="res://wall.gd" type="Script" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 84.3769, 667.517 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 762.702, 749.741 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 818.98, 1171.59 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="smallcube" type="RigidBody2D" parent="."]
+position = Vector2( 2500, 0 )
+mass = 0.01
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+linear_damp = 0.0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="smallcube"]
+scale = Vector2( 10, 1 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="smallcube"]
+position = Vector2( 0.13501, -1.69592 )
+scale = Vector2( 1.68663, 1.33085 )
+texture = ExtResource( 4 )
+
+[node name="bigcube" type="RigidBody2D" parent="."]
+position = Vector2( 4000, 0 )
+mass = 10000.0
+gravity_scale = 0.0
+linear_damp = 0.0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bigcube"]
+position = Vector2( 245.521, 0 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="bigcube"]
+position = Vector2( 247.067, -3.55588 )
+scale = Vector2( 1.51862, 1.49961 )
+texture = ExtResource( 5 )
+
+[node name="wall" type="KinematicBody2D" parent="."]
+position = Vector2( -700, 0 )
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="wall"]
+position = Vector2( 0.394554, -0.118057 )
+scale = Vector2( 1.63569, 2.34212 )
+texture = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 3000, 0 )
+offset = Vector2( 500, 0 )
+current = true
+zoom = Vector2( 7, 5.5 )
+[connection signal="body_entered" from="smallcube" to="smallcube" method="_on_collide"]
